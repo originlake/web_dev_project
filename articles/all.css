@@ -1,0 +1,263 @@
+body {
+    margin: auto;
+	margin-top: 0px;
+    background-color:#F7F2E0;
+	width:80%;
+}
+div.container{
+    display:flex;
+    flex-direction: column;
+}
+/* navbar */
+.navbar{
+    background-color:#99A3A4;
+    display: flex;
+    width:100%;
+    height:44px;
+    line-height:44px;
+}
+.navbar a{
+    display: flex;
+    text-decoration: none;
+    color: #f2f2f2;
+    padding: 0px 10px;
+    text-align: center;
+}
+.navbar a:hover{
+    background-color: #ddd;
+    color: black;
+}
+.navleft{
+    display: flex;
+    width:60%;
+    flex-direction:row;
+}
+.navright{
+    display:flex;
+    flex-direction: row-reverse;
+    width:40%;
+}
+.navbar form{
+    display:flex;
+    width:50%;
+    padding:8px 0px;
+}
+.navbar input[type="text"]{
+    width: 100%;
+    border: white;
+    padding: 4px 6px;
+}
+.navbar input[type="submit"]{
+    background-color: white;
+    border: 0px;
+}
+.navbar input[type="submit"]:hover{
+    border:1px solid #999;color:#000;
+}
+
+/*log in page*/
+div.main{
+    display: flex;
+    margin: 0px;
+    background-color: #FDFEFE;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+div.logbox{
+    display:flex;
+    width:40%;
+    align-items: center;
+    flex-direction: column;
+    background-color: lightblue;
+}
+div.logbox input{
+    width: 100%;
+    margin: auto;
+    margin-bottom: 20px;
+    height: 25px;
+}
+p.log{
+    display: flex;
+    text-align: center;
+    font-size: 2.5em;
+    margin: auto;
+    margin-bottom: 15px;
+    margin-top: 25px;
+}
+p.err{
+    color: #E74C3C;
+    display: flex;
+    margin-top: -20px;
+    font-size: x-small;
+}
+div.logbox form{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 80%;
+    margin-bottom: 40px;
+}
+div.logbox label{
+    margin: 0px;
+    margin-bottom:2px;
+    font-size: medium;
+}
+
+/*storygrid layout*/
+.storygrid {
+    display: flex;
+    width: 100%;
+    border: 1px solid lightgray;
+    flex-direction: column;
+    font-size: 17px;
+    border-radius: 13px;
+}
+.title {
+    display: flex;
+    padding: 8px 30px;
+    background-color:  papayawhip;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    justify-content: space-between;
+}
+.title1{
+    display: flex;
+}
+.title1 a {
+    text-decoration: none;
+    color: saddlebrown;
+}
+.title1 a:hover{
+    text-decoration: underline;
+}
+.manage{
+    display: flex;
+}
+.manage input:hover {
+    color: black;
+}
+.manage input {
+    display: flex;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: 20px;
+    color: white;
+    text-shadow: 1.5px 1.5px lightgrey;
+}
+.info {
+    display: flex;
+    padding: 0px 40px;
+    margin: 0px;
+    line-height: 1px;
+    background-color: lightgray;
+    font-size: x-small;
+    color: #404040;
+}
+.brief {
+    display: flex;
+    font-size: 13px;
+    margin: 0px;
+    padding: 9px 30px;
+    line-height: 15px;
+}
+/* story display */
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    text-align: justify;
+}
+
+/* editor */
+div.editor {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.editor form {
+    display: flex;
+    flex-direction: column;
+}
+.editor p{ 
+    display: flex;
+    font-size: x-large;
+    margin-bottom: 10px;
+}
+.editor label {
+    display: flex;
+    margin-bottom: 2px;
+}
+.editor input[type="text"] {
+    display: flex;
+    margin-bottom: 10px;
+    padding: 2px 5px;
+    font-size: medium;
+}
+.editor textarea {
+    display: flex;
+    margin-bottom: 10px;
+}
+div.submit {
+    display: flex;
+    flex-direction: row-reverse;
+}
+.submit input:hover {
+    background-color: darkgoldenrod;
+    color: white;
+}
+.submit input {
+    width: 8%;
+    margin-left: 10px;
+    border-width: 0px;
+    line-height: 31px;
+    border-radius: 45px;
+}
+/*comment*/
+p.head {
+    display: flex;
+    width: 95%;
+}
+div.commentgrid {
+    display: flex;
+    width: 90%;
+    flex-direction: column;
+    border-left: 2px solid gray;
+    padding: 0px 6px;
+    margin-bottom: 10px;
+}
+div.commenter{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+div.comleft{
+    display: flex;
+    flex-direction: row;
+}
+div.comright{
+    display: flex;
+    flex-direction: row-reverse;
+}
+.commenter a {
+    text-decoration: none;
+    margin: 0px;
+    color: blue;
+}
+.commenter p {
+    display: flex;
+    margin: 0px;
+    margin-left: 25px;
+    color: darkgray;
+}
+.comment {
+    display: flex;
+}
+.comment pre {
+    margin: 5px;
+}
+div.reply {
+    display: flex;
+    width: 85%;
+}
