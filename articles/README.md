@@ -1,2 +1,2 @@
-PHP + MySQL
+PHP + MySQL  
 practice on sql query
