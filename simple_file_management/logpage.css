@@ -1,0 +1,9 @@
+.center{
+	text-align: center;
+}
+.signpage{
+	margin: auto;
+	background-color: LightGray;
+	border: 1px solid gray;
+	width: 11em;
+}
