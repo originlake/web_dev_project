@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <title>Calendar</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap4 and jQuery -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <!-- Calendar Library -->
+        <script src="http://classes.engineering.wustl.edu/cse330/content/calendar.min.js"></script>
+        <script src="calendar.js"></script>
+        <!-- Font Awesome https://fontawesome.com/ -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+        <link rel="stylesheet" href="calendar.css">
+    </head>
+    <body>
+        <div class="container-fluid px-0 d-flex flex-column h-100">
+            <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+                <a class="navbar-brand" href="calendar.html">Calendar</a>
+                <ul id="login-nav" class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <button type="button" class="btn bg-primary nav-link active" data-toggle="modal" data-target="#login-modal">Log in</button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn bg-primary nav-link active" data-toggle="modal" data-target="#signup-modal">Sign up</button>
+                    </li>
+                </ul>
+                <ul id="logout-nav" class="navbar-nav ml-auto no-display"> 
+                    <li class="nav-item">
+                        <button type="button" class="btn bg-primary nav-link active" id="logout-btn">Log out</button>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="modal fade" id="login-modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary text-white">
+                            <h4 class="modal-title">Log in</h4>
+                            <button type="button" class="close shadow-none" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body mx-5">
+                            <div class="form-group">
+                                <label for="login-user">Username:</label>
+                                <input type="text" class="form-control" id="login-user">
+                            </div>
+                            <div class="form-group">
+                                <label for="login-pwd">Password:</label>
+                                <input type="password" class="form-control" id="login-pwd">
+                                <small id="login-helper" class="helper no-display text-danger">Username or password not correct</small>
+                            </div>
+                            <br>
+                            <button id="login-btn" type="button" class="btn btn-primary btn-block">Login</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal fade" id="signup-modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary text-white">
+                            <h4 class="modal-title">Sign up</h4>
+                            <button type="button" class="close shadow-none" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body mx-5">
+                            <div class="form-group">
+                                <label for="signup-user">Username:</label>
+                                <input type="text" class="form-control" id="signup-user">
+                                <small id="name-helper" class="helper no-display text-danger">You could choose from letters, underscore and dot. Underscore and dot can't be at the end or the start, or next to each other, or used multiple times in a row.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="signup-pwd1">Password:</label>
+                                <input type="password" class="form-control" id="signup-pwd1">
+                                <small id="pwd1-helper" class="helper no-display text-danger">At least one uppercase letter, one lower case letter, one number and one special character such as #$^+=!*_@%&</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="signup-pwd2">Password:</label>
+                                <input type="password" class="form-control" id="signup-pwd2">
+                                <small id="pwd2-helper" class="helper text-danger no-display">Two password not same</small>
+                            </div>
+                            <br>
+                            <button id="signup-btn" type="button" class="btn btn-primary btn-block">Sign Up</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+            <div class="row flex-grow-1 mx-0">
+                <div class="col-sm-10 d-flex flex-column">
+                    <div class="row border">
+                        <div class="d-flex flex-row justify-content-between w-100">
+                            <div class="p-2">
+                                <button id="prev-month" class="btn btn-link"><i class="fas fa-angle-left fa-2x"></i></button>
+                            </div>
+                            <div id="text-month" class="p-2 flex-fill text-center larger-font"></div>
+                            <div class="p-2">
+                                <button id="next-month" class="btn btn-link"><i class="fas fa-angle-right fa-2x"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row border border-top-0 d-flex gray-font flex-nowrap">
+                        <div class="flex-110 flex-fill border border-top-0 border-left-0 border-bottom-0 px-1 hide-overflow">Sunday</div>
+                        <div class="flex-110 flex-fill border border-top-0 border-left-0 border-bottom-0 px-1 hide-overflow">Monday</div>
+                        <div class="flex-110 flex-fill border border-top-0 border-left-0 border-bottom-0 px-1 hide-overflow">Tuesday</div>
+                        <div class="flex-110 flex-fill border border-top-0 border-left-0 border-bottom-0 px-1 hide-overflow">Wednesday</div>
+                        <div class="flex-110 flex-fill border border-top-0 border-left-0 border-bottom-0 px-1 hide-overflow">Thursday</div>
+                        <div class="flex-110 flex-fill border border-top-0 border-left-0 border-bottom-0 px-1 hide-overflow">Friday</div>
+                        <div class="flex-110 flex-fill px-1">Saturday</div>
+                    </div>
+                    <div id="calendar-grid" class="row border border-top-0 flex-grow-1 d-flex flex-column flex-fill">
+                    </div>
+                </div>
+                <div class="col-sm-2 p-2">
+                    <div class="d-flex justify-content-between">
+                        <div class="pr-1 custom-control custom-checkbox rounded bg-success text-white">
+                            <input type="checkbox" class="bg-success custom-control-input" id="tag-work" checked>
+                            <label class="custom-control-label" for="tag-work">Work</label>
+                        </div>
+                        <div class="pr-1 custom-control custom-checkbox rounded bg-warning text-white">
+                            <input type="checkbox" class="custom-control-input" id="tag-study" checked>
+                            <label class="custom-control-label" for="tag-study">Study</label>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="d-flex justify-content-between">
+                        <div id="to-add" class="no-display">        
+                            <button type="button" class="btn btn-primary" data-toggle="tooltip" title="Add new event">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <div id="to-edit" class="no-display">
+                            <button type="button" class="btn btn-info" id="edit-event" data-toggle="tooltip" title="Edit event">
+                                <i class="far fa-edit"></i>
+                            </button>
+                        </div>
+                        <div id="to-delete" class="no-display">
+                            <button type="button" class="btn btn-danger" id="delete-event"  data-toggle="tooltip" title="Delete event">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="display-event" class="no-display">
+                    </div>
+                    <div id="share-event" class="no-display">
+                        <button type="button" class="btn btn-secondary" data-toggle="tooltip" title="Share event">Share</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal fade" id="share-event-modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary text-white">
+                            <h4 class="modal-title">Share event</h4>
+                            <button type="button" class="close shadow-none" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body mx-5">
+                            <div class="input-group my-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Username</span>
+                                </div>
+                                <input type="text" class="form-control" id="target-user">
+                            </div>
+                            <small id="share-helper" class="helper no-display text-danger">User not exists</small>
+                            <button id="share-event-btn" type="button" class="btn btn-primary btn-block float-right w-25" >Share</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal fade" id="add-event-modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary text-white">
+                            <h4 class="modal-title">Add event</h4>
+                            <button type="button" class="close shadow-none" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body mx-5">
+                            <div class="input-group my-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Title</span>
+                                </div>
+                                <input type="text" class="form-control" id="event-title" value="(Title)">
+                            </div>
+                            <div class="d-flex my-3">
+                                <div class="input-group mr-2">
+                                    <input type="date" class="form-control text-center" value="2018-01-01" id="event-date">
+                                </div>
+                                <div class="input-group">
+                                    <input type="time" class="form-control text-center" value="00:01" id="event-time">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="radio-inline">
+                                    <input type="radio" name="add-event-tag" value="normal" checked>normal&nbsp;&nbsp;
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="add-event-tag" value="study">study&nbsp;&nbsp;
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="add-event-tag" value="work">work&nbsp;&nbsp;
+                                </label>
+                            </div> 
+                            <button id="addevent-btn" type="button" class="btn btn-primary btn-block float-right w-25" >Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal fade" id="edit-event-modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary text-white">
+                            <h4 class="modal-title">Edit event</h4>
+                            <button type="button" class="close shadow-none" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body mx-5">
+                            <div class="input-group my-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Title</span>
+                                </div>
+                                <input type="text" class="form-control" id="edit-event-title" value="(Title)">
+                            </div>
+                            <div class="d-flex my-3">
+                                <div class="input-group mr-2">
+                                    <input type="date" class="form-control text-center" value="2018-01-01" id="edit-event-date">
+                                </div>
+                                <div class="input-group">
+                                    <input type="time" class="form-control text-center" value="00:01" id="edit-event-time">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="radio-inline">
+                                    <input type="radio" name="edit-event-tag" value="normal" checked>normal&nbsp;&nbsp;
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="edit-event-tag" value="study">study&nbsp;&nbsp;
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="edit-event-tag" value="work">work&nbsp;&nbsp;
+                                </label>
+                            </div> 
+                            <button id="editevent-btn" type="button" class="btn btn-primary btn-block float-right w-25">Edit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

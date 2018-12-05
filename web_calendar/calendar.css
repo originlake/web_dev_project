@@ -1,0 +1,44 @@
+.larger-font{
+    font-size: 180%;
+}
+.smaller-font{
+    font-size: 60%;
+}
+.gray-font{
+    color: gray;
+}
+
+.hide-overflow{
+    overflow-x: hidden;
+}
+.auto-overflow{
+    overflow-y:auto;
+}
+html, body{
+    height:100vh;
+    overflow-y:hidden;
+    overflow-x:hidden;
+}
+#calendar-grid{
+    flex:1 1 0;
+}
+.flex-110{
+    flex:1 1 0!important;
+}
+.dropdown-menu{
+    max-height: 200px;
+    overflow-y: auto;
+}
+.tighten-text{
+    line-height: 10px !important;
+}
+.no-display{
+    display: none;
+}
+.blueviolet{
+    background-color: blueviolet;
+}
+.overflow-control{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
