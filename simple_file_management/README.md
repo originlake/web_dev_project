@@ -1,2 +1,2 @@
-PHP only  
+PHP
 example of unloading file and file management
