@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block mainbody %}
+
+<div class="col d-flex justify-content-center allow-overflow">
+    <div class="col-sm-6 d-flex flex-column">
+        <div id="background" class="d-flex flex-column">
+            <h1>Edit post</h1>
+            <form class="edit-form  d-flex flex-column" action="{% url 'items:edit' id %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Edit">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

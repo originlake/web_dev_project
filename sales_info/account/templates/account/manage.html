@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block mainbody %}
+    <div class="col-sm-12 d-flex justify-content-center mt-2 allow-overflow">
+        <div class="col-sm-10 d-flex flex-column">
+            <div id="background" class="d-flex flex-column">
+                <h1>{{ user.username }}</h1>
+                <p>
+                    <a href="{% url 'account:reset' %}">Reset Password</a>
+                    <a class="ml-2" href="{% url 'account:delete' %}">Delete Account</a>
+                </p>
+                <h1>Selling items</h1>
+                <div class="user-items">
+                    {% for item in items %}
+                        <div>
+                            <h2><a href="{% url 'items:item' item.id %}">{{ item.title }}</a><p class="smaller">{{ item.date }}</p></h2>
+                            <a href="{% url 'items:edit' item.id %}">edit</a>
+                            <a class="ml-2" href="{% url 'items:delete' item.id %}">delete</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

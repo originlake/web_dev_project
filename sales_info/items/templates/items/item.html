@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block mainbody %}
+   <div class="col-sm-12 d-flex justify-content-center mt-2 allow-overflow">
+        <div class="col-sm-11 pt-2 px-10 d-flex flex-column item ">
+            <div id="background" class="d-flex flex-column">
+                <h1>{{ item.title }} <p class="smaller">{{ item.date }}</p></h1>
+                <img src="{{ item.image.url }}" alt="image" class="mr-auto d-block">
+                <div>
+                    <div class="row">
+                        <p class="mx-4">Condition: {{ item.get_condition_display }}</p>
+                        <p class="mx-4">Category: {{ item.get_category_display }}</p>
+                        <p class="mx-4">Price: ${{ item.price }}</p>
+                        <p class="mx-4">Zip code:{{ item.zipcode }}</p>
+                        <p class="mx-4">Contact: {{ item.contact }}</p>
+                    </div>
+                </div>
+                <p class="row mx-4">Discription: {{ item.description }}</p>
+                <hr>
+                <h1>Comments</h1>
+                <hr>
+                <div class="d-flex justify-content-center">
+                    <div class="col-sm-11 d-flex flex-column">
+                    <form action="{% url "items:item" item.id%}" method="POST">
+                        {% csrf_token %}
+                        {{ form }}
+                        <input class="ml-auto" type="submit" value="Reply">
+                    </form>
+                        {% for comment in comments %}
+                            <h6>{{ comment.user.username }}:</h6>
+                            <p>{{ comment.comment }}</p>
+                            <hr>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% for i in "xxxxxxxxxx" %}
+                    <br>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

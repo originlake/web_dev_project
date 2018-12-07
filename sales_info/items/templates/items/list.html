@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block mainbody %}
+     <div class="col-sm-2 d-flex flex-column flex-grow-1 p-2 filter">
+         <h1>filter</h1>
+         <!-- TODO: add js to val the input -->
+         <label for="id_sort">Sorted by:</label>
+         <select name="order" id="id_sort">
+             <option value="date_asc" {% if not request.GET.order or request.GET.order == 'date_asc' %}selected{% endif %}>newest</option>
+             <option value="price_asc" {% if request.GET.order == 'price_asc' %}selected{% endif %}>price&uarr;</option>
+             <option value="price_dsc" {% if request.GET.order == 'price_dsc' %}selected{% endif %}>price&darr;</option>
+         </select>
+         <label for="id_condition">Condition:</label>
+         <select name="condition" id="id_condition">
+             <option value="all" {% if not request.GET.condition or request.GET.condition == 'all' %}selected{% endif %}></option>
+             <option value="0" {% if request.GET.condition == '0' %}selected{% endif %}>new</option>
+             <option value="1" {% if request.GET.condition == '1' %}selected{% endif %}>used:perfect</option>
+             <option value="2" {% if request.GET.condition == '2' %}selected{% endif %}>used:good</option>
+             <option value="3" {% if request.GET.condition == '3' %}selected{% endif %}>used:poor</option>
+         </select>
+         <label for="id_category">Category:</label>
+         <select name="category" id="id_category">
+             <option value="all" {% if not request.GET.category or request.GET.category == 'all' %}selected{% endif %}></option>
+             <option value="0" {% if request.GET.category and request.GET.category == '0' %}selected{% endif %}>clothes</option>>
+             <option value="1" {% if request.GET.category and request.GET.category == '1' %}selected{% endif %}>electronics</option>
+             <option value="2" {% if request.GET.category and request.GET.category == '2' %}selected{% endif %}>books</option>
+             <option value="3" {% if request.GET.category and request.GET.category == '3' %}selected{% endif %}>furniture</option>
+             <option value="4" {% if request.GET.category and request.GET.category == '4' %}selected{% endif %}>others</option>
+         </select>
+         <label for="id_price">Price:</label>
+         <div class="row ml-0">
+             <input class="col-sm-3 px-0" type="number" name="min_price" value="{% if request.GET.min_price %}{{ request.GET.min_price }}{% else %}0.0{% endif %}" step="0.01" id="id_price">&nbsp;-&nbsp;
+             <input class="col-sm-3 px-0" type="number" name="max_price" value="{% if request.GET.min_price %}{{ request.GET.max_price }}{% else %}0.0{% endif %}" step="0.01" id="id_price1">
+         </div>
+         <label for="id_zipcode">Zipcode:</label>
+         <input type="text" name="zipcode" maxlength="5" id="id_zipcode" {% if request.GET.zipcode %}value="{{ request.GET.zipcode }}"{% endif %}>
+         <hr>
+         <input type="submit" id="filter" value="Apply">
+     </div>
+     <div class="col-sm-10 d-flex flex-column p-4 items-grid">
+         <div class="row">
+             <input class="ml-5 col-sm-9" type="text" name="search" id="id_search" {% if request.GET.search %}value="{{ request.GET.search }}"{% endif %}>
+             <input type="submit" id="search" value="Search">
+         </div>
+         <hr>
+         <div class="row allow-overflow">
+             {% for item in items %}
+             <div class="col-sm-3 border item-grid">
+                 <h2 class="pl-2 row"><a href="{% url 'items:item' item.id %}">{{ item.title }}</a></h2>
+                 <div class="m-0 p-0 img-container img-thumbnail">
+                     <img src="{{ item.image.url }}" class="img-thumbnail" alt="image">
+                     <div class="smaller bg-white border">${{item.price}}</div>
+                 </div>
+             </div>
+             {% endfor %}
+         </div>
+     </div>
+     <script src="{% static "js/list.js" %}"></script>
+{% endblock %}

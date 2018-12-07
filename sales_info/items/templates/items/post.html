@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block mainbody %}
+<div class="col d-flex justify-content-center allow-overflow">
+    <div class="col-sm-6 d-flex flex-column">
+        <div id="background" class="d-flex flex-column">
+            <h1>Post a new item for sale</h1>
+            <form class="post-form d-flex flex-column" action="{% url 'items:post' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Post">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
