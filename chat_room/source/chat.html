@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <title>Chat Room</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap4 and jQuery -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <!-- Socket.io -->
+        <script src="/socket.io/socket.io.js"></script>
+        <!--Socket.IO File Upload-->
+        <script src="/siofu/client.js"></script>
+        <script src="chat.js"></script>
+        <!-- Font Awesome https://fontawesome.com/ -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+        <link rel="stylesheet" href="chat.css">
+    </head>
+    <body>
+        <!--login modal-->
+        <div class="modal fade" id="login-modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark text-white">
+                        <h4 class="modal-title">Choose a username</h4>
+                    </div>
+                    <div class="modal-body mx-5">
+                        <div class="input-group my-3">
+                            <input type="text" class="form-control" id="login-user" placeholder="Username">
+                            <div class="input-group-append">
+                                <button id="login-btn" type="button" class="btn">Go</button>
+                            </div>
+                        </div>
+                        <small id="login-helper" class="helper no-display text-danger">Username exists</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--join roon modal-->
+        <div class="modal fade" id="join-modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark text-white">
+                        <h4 class="modal-title">Join room</h4>
+                        <button type="button" class="close shadow-none" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body mx-5">
+                        <div class="input-group my-3">
+                            <input type="text" class="form-control" id="join-room" placeholder="Room name">
+                            <div class="input-group-append">
+                                <button id="join-btn" type="button" class="btn">Join</button>
+                            </div>
+                        </div>
+                        <div class="input-group my-3 no-display" id="join-pwd-show">
+                            <input type="password" class="form-control" id="join-pwd" placeholder="Password">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--create room modal-->
+        <div class="modal fade" id="create-modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark text-white">
+                        <h4 class="modal-title">Create room</h4>
+                        <button type="button" class="close shadow-none" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body mx-5">
+                        <div>
+                            <label class="radio-inline">
+                                <input type="radio" id="radio0" name="room-attr" value="public" checked>public&nbsp;&nbsp;
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" id="radio1" name="room-attr" value="private">private&nbsp;&nbsp;
+                            </label>
+                        </div> 
+                        <div class="input-group my-3">
+                            <input type="text" class="form-control" id="create-room" placeholder="Room name"><br>
+                            <div class="input-group-append">
+                                <button id="create-btn" type="button" class="btn">Join</button>
+                            </div>
+                        </div>
+                        <div class="input-group my-3">
+                            <input type="password" class="form-control  no-display" id="create-pwd" placeholder="Password">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid px-0 d-flex flex-column h-100 text-light">
+            <!-- navigator   join, create, username            -->
+            <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+                <a class="navbar-brand" href="chat.html">Chat Room</a>
+                <ul id="login-nav" class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <button id="to-join" type="button" class="btn bg-dark nav-link active" data-toggle="tooltip" title="Join a new room"><i class="fas fa-sign-in-alt fa-lg"></i></button>
+                    </li>
+                    <li class="nav-item">
+                        <button id="to-create" type="button" class="btn bg-dark nav-link active" data-toggle="tooltip" title="Create a new room"><i class="fas fa-plus-circle fa-lg"></i></button>
+                    </li>
+                    <li class="nav-item">
+                        <button id="disp-user" type="button" class="btn bg-dark nav-link active">Welcome!</button>
+                    </li>
+                </ul>
+            </nav>
+            <!-- main -->
+            <div class="row flex-grow-1 mx-0">
+                <!-- Room List-->
+                <div class="col-sm-2 d-flex flex-column p-2 bg-room">
+                    <h4 class="border border-top-0 border-left-0 border-right-0 border-gray">Room</h4>
+                    <div id="room-list" class="d-flex flex-column list-overflow h-50">
+                    </div>
+                    <h4 class="border border-top-0 border-left-0 border-right-0 border-gray">PM</h4>
+                    <div id="pm-list" class="d-flex flex-column list-overflow"></div>
+                </div>
+                <!-- Chat window-->
+                <div id="hide-1" class="col-sm-8 d-flex flex-column p-0 bg-chat no-display">
+                    <div class="d-flex flex-grow-1 p-2">
+                        <div class="d-flex flex-column w-100">
+                            <div class="d-flex flex-shrink-0 justify-content-center border border-top-0 border-left-0 border-right-0 border-gray ">
+                                <h4 id="cur-room-name" class="text-center">Room</h4>
+                            </div>
+                            <div id='dialog' class="d-flex flex-column list-overflow ml-2">
+                                <!--<div class="border border-top-0 border-left-0 border-right-0 border-gray">-->
+                                <!--    <h6 class="mt-1">User1 <small>10/11/2018</small></h6>-->
+                                <!--    <div class="w-50">-->
+                                <!--        <img src="client.jpg" alt="test" class="img-fluid mb-1">-->
+                                <!--    </div>-->
+                                <!--</div>-->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- input -->
+                    <div class="d-flex flex-shrink-0 type-height border border-bottom-0 border-left-0 border-right-0 border-gray">        
+                        <div class="input-group my-auto mx-3 border-0">
+                            <!--Creative portion-->
+                            <!--send image-->
+                            <div class="input-group-prepend">
+                                <input type='file' class='no-display' id='img-input' accept="image/*">
+                                <button type="button" class="btn d-flex bg-gray onhover-btn" id='img-upload'>
+                                    <i class="fa fa-image fa-lg text-gray"></i>
+                                </button>
+                            </div>
+                            <!--emoji-->
+                            <div class="input-group-prepend">
+                                <button type="button" class="btn d-flex bg-gray onhover-btn" id='emoji-btn'>
+                                    <i class="far fa-smile fa-lg text-gray"></i> 
+                                </button>
+                            </div>
+                            <input id="msg" type="text" class="form-control input-msg bg-input border-gray" placeholder="Message">
+                        </div>
+                    </div>
+                </div>
+                <!-- User list-->
+                <div id="hide-2" class="col-sm-2 d-flex flex-column bg-user p-2 no-display">
+                    <h4 class="border border-top-0 border-left-0 border-right-0 border-gray">Users</h4>
+                    <div id='cur-room-user' class="d-flex flex-column list-overflow">
+                        <div class="d-flex user-btn-group">
+                            <button type="button" class="d-flex flex-shrink-0 flex-grow-1 btn justify-content-between bg-user text-gray onhover-text p-0">
+                                <span class="my-auto">User1</span>
+                            </button>
+                            <button type="button" class="d-flex flex-shrink-0 btn justify-content-between bg-user text-gray onhover-text onhover-btn bg-btn-kick ml-1 p-0 no-display">
+                                <span class="my-auto px-1">kick</span>
+                            </button>
+                            <button type="button" class="d-flex flex-shrink-0 btn justify-content-between bg-user text-gray onhover-text onhover-btn bg-btn-kick ml-1 p-0 no-display">
+                                <span class="my-auto px-1">ban</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
